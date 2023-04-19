@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homework_1/blocs/department_bloc.dart';
 import 'package:homework_1/blocs/post_bloc.dart';
-import 'package:homework_1/screens/kdrc_screen.dart';
+import 'package:homework_1/ui/screens/kdrc_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: KdrcScreen(),
+          home: const KdrcScreen(),
         ),
     );
   }
