@@ -14,17 +14,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider<PostBloc>(create: (_) => PostBloc()),
-          BlocProvider<DepartmentBloc>(create: (_) => DepartmentBloc()),
-        ],
-        child: MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: const KdrcScreen(),
+      providers: [
+        BlocProvider<PostBloc>(create: (_) => PostBloc()),
+        BlocProvider<DepartmentBloc>(create: (_) => DepartmentBloc()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
+        home: const KdrcScreen(),
+      ),
     );
   }
 }

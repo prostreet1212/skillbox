@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/post.dart';
 
-Widget getDepartmentItem(BuildContext context,Post post){
+Widget getDepartmentItem(BuildContext context, Post post) {
   return GestureDetector(
     onTap: () {
       showModalBottomSheet(
@@ -15,13 +15,10 @@ Widget getDepartmentItem(BuildContext context,Post post){
                     alignment: Alignment.topCenter,
                     child: Text(
                       post.title!.rendered!,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Text(post
-                      .excerpt!
-                      .rendered!),
+                  Text(post.excerpt!.rendered!),
                 ],
               ),
             );
@@ -34,36 +31,26 @@ Widget getDepartmentItem(BuildContext context,Post post){
           children: [
             SizedBox(
               width: 120,
-              child: Image.asset(post
-                  .betterFeaturedImage!
-                  .mediaDetails!
-                  .sizes!
-                  .mediumLarge!
-                  .sourceUrl!),
+              child: Image.asset(post.betterFeaturedImage!.mediaDetails!.sizes!
+                  .mediumLarge!.sourceUrl!),
             ),
             const SizedBox(
               width: 10,
             ),
             Flexible(
               child: Column(
-                mainAxisAlignment:
-                MainAxisAlignment.center,
-                crossAxisAlignment:
-                CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(post
-                      .date!
-                      .substring(0, 10)),
+                  Text(post.date!.substring(0, 10)),
                   const SizedBox(
                     height: 10,
                   ),
                   Text(
                     post.title!.rendered!,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                        fontWeight: FontWeight.bold, fontSize: 20),
                   ),
-                  //Text(snapshot.data![0].excerpt!.rendered!),
                 ],
               ),
             )
@@ -72,5 +59,4 @@ Widget getDepartmentItem(BuildContext context,Post post){
       ),
     ),
   );
-
 }

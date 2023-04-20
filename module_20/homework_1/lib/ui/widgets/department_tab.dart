@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homework_1/ui/widgets/department_item.dart';
-
 import '../../blocs/department_bloc.dart';
 import '../../models/post.dart';
-
 
 class DepartmentTab extends StatelessWidget {
   const DepartmentTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  BlocBuilder<DepartmentBloc, Future<List<Post>>>(
+    return BlocBuilder<DepartmentBloc, Future<List<Post>>>(
       builder: (_, state) {
         return FutureBuilder(
           future: state,
@@ -44,6 +42,5 @@ class DepartmentTab extends StatelessWidget {
         );
       },
     );
-
   }
 }

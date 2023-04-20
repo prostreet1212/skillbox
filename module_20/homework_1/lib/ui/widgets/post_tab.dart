@@ -43,6 +43,5 @@ class PostTab extends StatelessWidget {
         );
       },
     );
-
   }
 }

@@ -7,8 +7,5 @@ class PostBloc extends Bloc<PostEvent, Future<List<Post>>> {
 }
 
 abstract class PostEvent {}
+
 class GetPostList extends PostEvent {}
-
-
-
-

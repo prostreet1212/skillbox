@@ -21,6 +21,4 @@ class ConstPostRepository extends PostRepository {
     departmentList = departmentsDynamic.map((e) => Post.fromJson(e)).toList();
     return departmentList;
   }
-
-//http://kdrc.ru/wp-json/wp/v2/posts/?categories=3
 }
