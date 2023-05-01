@@ -18,7 +18,7 @@ class KdrcScreen extends StatelessWidget {
               text: 'Все записи',
             ),
             Tab(
-              text: 'Отделения организации',
+              text: 'Все записи2',
             ),
           ]),
         ),

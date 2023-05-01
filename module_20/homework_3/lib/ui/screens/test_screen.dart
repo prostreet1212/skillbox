@@ -1,23 +1,48 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import '../../models/post.dart';
 
 
-class TestScreen extends StatelessWidget {
+
+class StaticWidget{
+ static Widget getTextWidget(){
+   return Text('утечка, ты где?');
+ }
+}
+
+var textStatic=StaticWidget.getTextWidget();
+
+
+
+class TestScreen extends StatefulWidget {
   const TestScreen({Key? key}) : super(key: key);
 
   @override
+  State<TestScreen> createState() => _TestScreenState();
+}
+
+class _TestScreenState extends State<TestScreen> {
+
+  @override
   Widget build(BuildContext context) {
+    print(textStatic.toString());
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          child: Text('aaa'),
+          child: textStatic,
           onPressed: (){
-            Future.delayed(Duration(minutes: 100), () {
-              print('object ${context.widget}');
-            });
-            Navigator.pop(context);
+              Post a=Post();
+              Post b;
+              b=a;
+              a=b;
+            //Navigator.pop(context);
           },
         ),
-      )
+      ),
     );
   }
 }
+
+
+

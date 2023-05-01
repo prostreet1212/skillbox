@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../models/post.dart';
+import '../screens/test_screen.dart';
 
 /*class PostItem extends StatelessWidget {
    PostItem({Key? key, required this.post}) : super(key: key);
@@ -85,15 +88,23 @@ class PostItem extends StatefulWidget {
 }
 
 class _PostItemState extends State<PostItem> {
+
+  @override
+  void initState() {
+    super.initState();
+    widget.text1=widget.post.title!.rendered!;
+Timer.periodic(Duration(seconds: 1), (timer) {
+  print(textStatic.toString());
+});
+  }
+
   //widget.text=widget.post.title!.rendered!;
   @override
   Widget build(BuildContext context) {
 
     return GestureDetector(
       onTap: () {
-
         setState(() {
-          //widget.text='текст';
           widget.text1='текст';
         });
         showModalBottomSheet(

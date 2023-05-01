@@ -4,9 +4,10 @@ import 'package:homework_1/ui/widgets/department_item.dart';
 import '../../blocs/department_bloc.dart';
 import '../../models/post.dart';
 
+
+
 class DepartmentTab extends StatelessWidget {
   const DepartmentTab({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DepartmentBloc, Future<List<Post>>>(
@@ -29,7 +30,7 @@ class DepartmentTab extends StatelessWidget {
                   return ListView.builder(
                     itemCount: postList.length,
                     itemBuilder: (context, index) {
-                      //return getDepartmentItem(context, postList[index]);
+                      //return StaticWidget.getDepartmentItem(context, postList[index]);
                       return DepartmentItem(post: postList[index]);
                     },
                   );
