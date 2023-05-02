@@ -7,7 +7,12 @@ import '../../models/post.dart';
 
 class StaticWidget{
  static Widget getTextWidget(){
-   return Text('утечка, ты где?');
+   return Column(
+     mainAxisSize: MainAxisSize.min,
+     children: [
+       Text('утечка, ты где?')
+     ],
+   );
  }
 }
 
@@ -36,7 +41,7 @@ class _TestScreenState extends State<TestScreen> {
               Post b;
               b=a;
               a=b;
-            //Navigator.pop(context);
+            Navigator.pop(context);
           },
         ),
       ),
