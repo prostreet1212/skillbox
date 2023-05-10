@@ -1,13 +1,16 @@
 import 'package:hive/hive.dart';
 
+import 'artist.dart';
 
 part 'genre.g.dart';
 
 @HiveType(typeId: 0)
-class Jenre extends HiveObject{
-
+class Jenre extends HiveObject {
   @HiveField(0)
-  String jenreMusic;
+  String name;
 
-  Jenre(this.jenreMusic);
+  @HiveField(1)
+  List<String>? artist;
+
+  Jenre(this.name, this.artist);
 }
