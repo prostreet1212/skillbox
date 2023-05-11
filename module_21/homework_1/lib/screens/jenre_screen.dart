@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:homework_1/screens/artist_screen.dart';
+import 'package:homework_1/widgets/add_jenre_dialog.dart';
+import 'package:homework_1/widgets/jenre_card.dart';
 import '../model/genre.dart';
 
 class JenreScreen extends StatefulWidget {
@@ -23,6 +24,13 @@ class _JenreScreenState extends State<JenreScreen> {
     initHive();
   }
 
+  @override
+  void dispose() {
+    addJenreController!.dispose();
+    changeJenreController!.dispose();
+    super.dispose();
+  }
+
   void initHive() async {
     Hive.openBox<Jenre>('jenre').then((value) {
       setState(() {
@@ -38,7 +46,6 @@ class _JenreScreenState extends State<JenreScreen> {
   void changeJenre(int index, String changedJenre) {
     jenreBox!.values.elementAt(index).name = changedJenre;
     jenreBox!.values.elementAt(index).save();
-    jenreBox!.values.elementAt(index).artist!.add('aa');
   }
 
   void removeJenre(int index) {
@@ -63,78 +70,12 @@ class _JenreScreenState extends State<JenreScreen> {
                   return ListView.separated(
                     itemCount: box.length,
                     itemBuilder: (context, i) {
-                      return GestureDetector(
-                        onLongPress: () {
-                          changeJenreController!.text =
-                              jenreBox!.values.elementAt(i).name;
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title:
-                                      const Text('Изменить категорию музыки'),
-                                  content: SingleChildScrollView(
-                                    child: ListBody(
-                                      children: <Widget>[
-                                        //Text('This is a demo alert dialog.'),
-                                        TextField(
-                                          controller: changeJenreController,
-                                          decoration: const InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: 'Жанр',
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Text('ОК'),
-                                      onPressed: () {
-                                        changeJenre(
-                                            i, changeJenreController!.text);
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: const Text('Отмена'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              });
-                        },
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ArtistScreen(jenreBoxItem: jenreBox!.values.elementAt(i),),
-                            ),
-                          );
-                        },
-                        child: Dismissible(
-                            key: Key(box.values.elementAt(i).name),
-                            onDismissed: (direction) {
-                              setState(() {
-                                //items.removeAt(i);
-                                box.values.elementAt(i).delete();
-                              });
-                            },
-                            child: Card(
-                              color: Colors.lightBlueAccent,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Center(
-                                  child: Text(
-                                    box.values.elementAt(i).name,
-                                    style: const TextStyle(fontSize: 24),
-                                  ),
-                                ),
-                              ),
-                            )),
-                      );
+                      return JenreCard(
+                          changeJenreController: changeJenreController,
+                          jenre: jenreBox!.values.elementAt(i),
+                          box: box,
+                          changeJenre: changeJenre,
+                          i: i);
                     },
                     separatorBuilder: (context, i) {
                       return Container(height: 0);
@@ -149,40 +90,9 @@ class _JenreScreenState extends State<JenreScreen> {
           showDialog(
               context: context,
               builder: (context) {
-                return AlertDialog(
-                  title: const Text('Добавить категорию музыки'),
-                  content: SingleChildScrollView(
-                    child: ListBody(
-                      children: <Widget>[
-                        //Text('This is a demo alert dialog.'),
-                        TextField(
-                          controller: addJenreController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Жанр',
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text('ОК'),
-                      onPressed: () {
-                        addJenre(addJenreController!.text);
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    TextButton(
-                      child: const Text('Отмена'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
+                return AddJenreDialog(
+                    controller: addJenreController, addJenre: addJenre);
               });
-          //removeJenre();
         },
       ),
     );
