@@ -1,7 +1,5 @@
 import 'package:hive/hive.dart';
 
-import 'artist.dart';
-
 part 'genre.g.dart';
 
 @HiveType(typeId: 0)

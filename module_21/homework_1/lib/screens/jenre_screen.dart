@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:homework_1/model/artist.dart';
 import 'package:homework_1/screens/artist_screen.dart';
 import '../model/genre.dart';
 
@@ -51,12 +49,12 @@ class _JenreScreenState extends State<JenreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Spotify на минималках'),
+        title: const Text('Spotify на минималках'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: jenreBox == null
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : ValueListenableBuilder(
@@ -81,6 +79,10 @@ class _JenreScreenState extends State<JenreScreen> {
                                         //Text('This is a demo alert dialog.'),
                                         TextField(
                                           controller: changeJenreController,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            labelText: 'Жанр',
+                                          ),
                                         )
                                       ],
                                     ),
@@ -123,11 +125,11 @@ class _JenreScreenState extends State<JenreScreen> {
                             child: Card(
                               color: Colors.lightBlueAccent,
                               child: Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Center(
                                   child: Text(
                                     box.values.elementAt(i).name,
-                                    style: TextStyle(fontSize: 24),
+                                    style: const TextStyle(fontSize: 24),
                                   ),
                                 ),
                               ),
@@ -142,7 +144,7 @@ class _JenreScreenState extends State<JenreScreen> {
               ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           showDialog(
               context: context,
@@ -155,6 +157,10 @@ class _JenreScreenState extends State<JenreScreen> {
                         //Text('This is a demo alert dialog.'),
                         TextField(
                           controller: addJenreController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Жанр',
+                          ),
                         )
                       ],
                     ),
