@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
-/*
-class ChangeJenreDialog extends StatefulWidget {
-  const ChangeJenreDialog({Key? key}) : super(key: key);
+class ChangeJenreDialog extends StatelessWidget {
+  const ChangeJenreDialog(
+      {Key? key,
+      required this.changeJenreController,
+      required this.changeJenre,
+      required this.i})
+      : super(key: key);
 
-  @override
-  State<ChangeJenreDialog> createState() => _ChangeJenreDialogState();
-}
+  final TextEditingController? changeJenreController;
+  final Function(int, String) changeJenre;
+  final int i;
 
-class _ChangeJenreDialogState extends State<ChangeJenreDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -17,7 +20,7 @@ class _ChangeJenreDialogState extends State<ChangeJenreDialog> {
         child: ListBody(
           children: <Widget>[
             TextField(
-              controller: widget.changeJenreController,
+              controller: changeJenreController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Жанр',
@@ -30,8 +33,7 @@ class _ChangeJenreDialogState extends State<ChangeJenreDialog> {
         TextButton(
           child: const Text('ОК'),
           onPressed: () {
-            widget.changeJenre(
-                widget.i, widget.changeJenreController!.text);
+            changeJenre(i, changeJenreController!.text);
             Navigator.of(context).pop();
           },
         ),
@@ -45,4 +47,3 @@ class _ChangeJenreDialogState extends State<ChangeJenreDialog> {
     );
   }
 }
-*/

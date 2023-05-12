@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-
 class AddJenreDialog extends StatelessWidget {
-   AddJenreDialog({Key? key,required this.controller,required this.addJenre}) : super(key: key);
+  const AddJenreDialog(
+      {Key? key, required this.controller, required this.addJenre})
+      : super(key: key);
 
-  TextEditingController? controller;
-  Function (String) addJenre;
-
-
+  final TextEditingController? controller;
+  final Function(String) addJenre;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,6 @@ class AddJenreDialog extends StatelessWidget {
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            //Text('This is a demo alert dialog.'),
             TextField(
               controller: controller,
               decoration: const InputDecoration(
