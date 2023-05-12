@@ -35,6 +35,13 @@ class _ArtistScreenState extends State<ArtistScreen> {
     setState(() {});
   }
 
+  void deleteArtist(int i) {
+    setState(() {
+      widget.jenreBoxItem.artist!.removeAt(i);
+      widget.jenreBoxItem.save();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,11 +53,14 @@ class _ArtistScreenState extends State<ArtistScreen> {
         child: ListView.builder(
             itemCount: widget.jenreBoxItem.artist!.length,
             itemBuilder: (context, i) {
-              return ArtistCard(changeArtistController: changeArtistController,
-                  changeDescriptionController: changeDescriptionController,
-                  jenreItem: widget.jenreBoxItem.artist!.elementAt(i),
-                  i: i,
-                  changeArtist: changeArtist);
+              return ArtistCard(
+                changeArtistController: changeArtistController,
+                changeDescriptionController: changeDescriptionController,
+                jenreItem: widget.jenreBoxItem.artist!.elementAt(i),
+                i: i,
+                changeArtist: changeArtist,
+                deleteArtist: deleteArtist,
+              );
             }),
       ),
       floatingActionButton: FloatingActionButton(

@@ -14,14 +14,13 @@ class AddArtistDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    changeArtistController!.text='';
-    changeDescriptionController!.text='';
+    changeArtistController!.text = '';
+    changeDescriptionController!.text = '';
     return AlertDialog(
       title: const Text('Добавить артиста'),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            //Text('This is a demo alert dialog.'),
             TextField(
               controller: changeArtistController,
               decoration: const InputDecoration(

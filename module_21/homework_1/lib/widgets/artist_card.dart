@@ -10,7 +10,8 @@ class ArtistCard extends StatelessWidget {
       required this.changeDescriptionController,
       required this.jenreItem,
       required this.i,
-      required this.changeArtist})
+      required this.changeArtist,
+      required this.deleteArtist})
       : super(key: key);
 
   final TextEditingController? changeArtistController;
@@ -18,6 +19,7 @@ class ArtistCard extends StatelessWidget {
   final String jenreItem;
   final int i;
   final Function(String, String, int) changeArtist;
+  final Function(int) deleteArtist;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +49,7 @@ class ArtistCard extends StatelessWidget {
       child: Dismissible(
         key: Key(const Uuid().v1()),
         onDismissed: (direction) {
-          /*setState(() {
-            widget.jenreBoxItem.artist!.removeAt(i);
-            widget.jenreBoxItem.save();
-          });*/
+          deleteArtist(i);
         },
         child: Card(
           color: Colors.tealAccent,
