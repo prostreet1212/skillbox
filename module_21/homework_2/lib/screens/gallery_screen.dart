@@ -29,6 +29,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
       imageBytes = file.readAsBytesSync();
     }
+
   }
 
   @override
@@ -37,6 +38,9 @@ class _GalleryScreenState extends State<GalleryScreen> {
     urlTextController = TextEditingController();
     urlTextController.text =
     'https://radioultra.ru/uploads/photos/1/2021/01/Korn.jpg';
+    String a='https://radioultra.ru/uploads/photos/1/2021/01/Korn.jpg';
+    String b=a.substring(a.lastIndexOf('/')+1,a.length);
+    print(b);
     _init();
   }
 
