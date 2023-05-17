@@ -17,18 +17,24 @@ class _GalleryScreenState extends State<GalleryScreen> {
   late TextEditingController urlTextController;
   late File file;
   Uint8List? imageBytes;
+  late Future<List<Uint8List?>> imageByteList=Future(() => []);
+  List<Uint8List?> s=[];
 
-  void _init() async {
+  Future<List<Uint8List?>> _downloadImage() async {
     final appDir = await getApplicationDocumentsDirectory();
     var response = await Dio().get<List<int>>(
         urlTextController.text,
         options: Options(responseType: ResponseType.bytes));
-    file = File('${appDir.path}/korn.jpg');
+    String nameImage=urlTextController.text.substring(urlTextController.text.lastIndexOf('/')+1,urlTextController.text.length);
+    file = File('${appDir.path}/$nameImage');
+    print(appDir.path);
     file.writeAsBytesSync(response.data ?? []);
-    if (await file.exists()) {
 
+    //if (await file.exists()) {
       imageBytes = file.readAsBytesSync();
-    }
+      s.add(imageBytes);
+      return s;
+    //}
 
   }
 
@@ -38,10 +44,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
     urlTextController = TextEditingController();
     urlTextController.text =
     'https://radioultra.ru/uploads/photos/1/2021/01/Korn.jpg';
-    String a='https://radioultra.ru/uploads/photos/1/2021/01/Korn.jpg';
-    String b=a.substring(a.lastIndexOf('/')+1,a.length);
-    print(b);
-    _init();
   }
 
   @override
@@ -51,29 +53,62 @@ class _GalleryScreenState extends State<GalleryScreen> {
       body: Padding(
         padding: EdgeInsets.all(8),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
              //Expanded(child: ListView(),)
-           // imageBytes!=null?
-            Image.memory(imageBytes!),//:
-            //Text('not load image'),
-            Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: TextField(
-                    controller: urlTextController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Введите url картинки',
-                    ),
-                  ),),
-                IconButton(
-                  icon: Icon(Icons.save),
-                  onPressed: () {
+           FutureBuilder(
+             future: imageByteList,
+               builder: (context,snapshot){
+               switch(snapshot.connectionState){
+                 case ConnectionState.waiting:
+                   return Center(child: CircularProgressIndicator(),);
+                 case ConnectionState.active:
+                   return Image.memory(snapshot.data![0]!);
+                 case ConnectionState.done:
+                   if(snapshot.hasData){
+                     if(snapshot.data!.isNotEmpty){
+                       var list=snapshot.data!;
+                       return Expanded(child: ListView.builder(
+                           itemCount: list.length,
+                           itemBuilder: (context,i){
+                             return Image.memory(list[i]!);
+                           }));
+                     }else{
+                       return Container();
+                     }
+                   }else{
+                     return Text('error');
+                   }
+                 default:
+                   return Text('aaa');
+               }
 
-                  },)
-              ],
-            )
+           }),
+
+
+            SizedBox(height: 10,),
+            Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: TextField(
+                      controller: urlTextController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Введите url картинки',
+                      ),
+                    ),),
+                  IconButton(
+                    icon: Icon(Icons.save),
+                    onPressed: () {
+                      setState(() {
+                        imageByteList=_downloadImage();
+                      });
+
+                    },)
+                ],
+              ),
+
           ],
         ),
       ),
