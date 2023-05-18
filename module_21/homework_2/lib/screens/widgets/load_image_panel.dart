@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homework_2/image_bloc/image_bloc.dart';
 
 class LoadImagePanel extends StatelessWidget {
-  const LoadImagePanel({Key? key,required this.urlTextController}) : super(key: key);
-   final TextEditingController urlTextController;
+  const LoadImagePanel({Key? key, required this.urlTextController})
+      : super(key: key);
+  final TextEditingController urlTextController;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,8 @@ class LoadImagePanel extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.save),
                 onPressed: () {
-                  BlocProvider.of<ImageBloc>(context).add(LoadImageFromUrlEvent(urlTextController.text));
+                  BlocProvider.of<ImageBloc>(context)
+                      .add(LoadImageFromUrlEvent(urlTextController.text));
                 },
               )
             ],

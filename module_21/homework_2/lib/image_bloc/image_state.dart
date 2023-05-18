@@ -1,12 +1,18 @@
 part of 'image_bloc.dart';
 
-class ImageState {
+abstract class ImageState {
+
+}
+
+class GetImageState extends ImageState{
    final Future<List<Uint8List?>> imageByteList;
 
 
-   ImageState (  this.imageByteList);
+   GetImageState (  this.imageByteList);
 
-   /*ImageState.copyWith(this.imageByteList, Future<List<Uint8List?>>? imageByteList){
+/*ImageState.copyWith(this.imageByteList, Future<List<Uint8List?>>? imageByteList){
       return ImageState(imageByteList: imageByteList??this.imageByteList);*/
 }
+
+class ImageUrlNotValidState extends ImageState{}
 

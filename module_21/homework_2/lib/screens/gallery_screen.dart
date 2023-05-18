@@ -1,8 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homework_2/image_bloc/image_bloc.dart';
 import 'package:homework_2/screens/widgets/load_image_panel.dart';
-
 
 class GalleryScreen extends StatefulWidget {
   const GalleryScreen({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class GalleryScreen extends StatefulWidget {
 class _GalleryScreenState extends State<GalleryScreen> {
   late TextEditingController urlTextController;
   late ImageBloc imageBloc;
+  Future<List<Uint8List?>> listImage = Future.value([]);
 
   @override
   void initState() {
@@ -33,44 +35,58 @@ class _GalleryScreenState extends State<GalleryScreen> {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            BlocBuilder<ImageBloc, ImageState>(builder: (context, state) {
-              return FutureBuilder(
-                  future: state.imageByteList,
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return const Expanded(
-                            flex: 10,
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ));
-                      case ConnectionState.active:
-                        return Image.memory(snapshot.data![0]!);
-                      case ConnectionState.done:
-                        if (snapshot.hasData) {
-                          if (snapshot.data!.isNotEmpty) {
-                            var list = snapshot.data!;
-                            return Expanded(
-                                flex: 10,
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: ListView.builder(
-                                      itemCount: list.length,
-                                      itemBuilder: (context, i) {
-                                        return Image.memory(list[i]!);
-                                      }),
-                                ));
+            BlocConsumer<ImageBloc, ImageState>(
+              listener: (context, state) {
+                if (state is ImageUrlNotValidState) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('url неверный'),
+                    ),
+                  );
+                }
+                if (state is GetImageState) {
+                  listImage = state.imageByteList;
+                }
+              },
+              builder: (context, state) {
+                return FutureBuilder(
+                    future: listImage,
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return const Expanded(
+                              flex: 10,
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ));
+                        case ConnectionState.active:
+                          return Image.memory(snapshot.data![0]!);
+                        case ConnectionState.done:
+                          if (snapshot.hasData) {
+                            if (snapshot.data!.isNotEmpty) {
+                              var list = snapshot.data!;
+                              return Expanded(
+                                  flex: 10,
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: ListView.builder(
+                                        itemCount: list.length,
+                                        itemBuilder: (context, i) {
+                                          return Image.memory(list[i]!);
+                                        }),
+                                  ));
+                            } else {
+                              return Container();
+                            }
                           } else {
-                            return Container();
+                            return const Text('error');
                           }
-                        } else {
-                          return const Text('error');
-                        }
-                      default:
-                        return const Text('not working');
-                    }
-                  });
-            }),
+                        default:
+                          return const Text('not working');
+                      }
+                    });
+              },
+            ),
             const SizedBox(
               height: 10,
             ),
