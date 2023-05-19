@@ -9,7 +9,8 @@ part 'image_event.dart';
 part 'image_state.dart';
 
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
-  ImageBloc() : super(GetImageState(Future.value([]))) {
+
+  ImageBloc() : super(GetImageState(imageByteList: Future.value())) {
     on<LoadImageFromMemoryEvent>(_onLoadImageFromMemory);
     on<LoadImageFromUrlEvent>(_onLoadImageFromUrl);
   }
@@ -30,7 +31,7 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
       }
     }).toList();
 
-    emit(GetImageState(Future.value(s)));
+    emit(GetImageState(imageByteList:Future.value(s)));
     return s;
   }
 
@@ -50,7 +51,8 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
         imageBytes = file.readAsBytesSync();
         s.add(imageBytes);
       }
-      emit(GetImageState(Future.value(s)));
+      emit(GetImageState(imageByteList:Future.value(s)));
+      emit((state as GetImageState).copyWith(imageByteList:Future.value(s)));
     } else {
       emit(ImageUrlNotValidState());
     }
