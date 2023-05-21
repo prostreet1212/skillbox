@@ -5,112 +5,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homework_2/image_bloc/image_bloc.dart';
 import 'package:homework_2/screens/widgets/load_image_panel.dart';
 import 'package:homework_2/text_field_bloc/text_field_bloc.dart';
-/*
-class GalleryScreen extends StatefulWidget {
-  const GalleryScreen({Key? key}) : super(key: key);
 
-  @override
-  State<GalleryScreen> createState() => _GalleryScreenState();
-}
-
-class _GalleryScreenState extends State<GalleryScreen> {
-  late TextEditingController urlTextController;
-  late ImageBloc imageBloc;
-  late TextFieldBloc textFieldBloc;
-  Future<List<Uint8List?>> listImage = Future.value([]);
-
-  @override
-  void initState() {
-    super.initState();
-    urlTextController = TextEditingController();
-    urlTextController.text =
-        'https://radioultra.ru/uploads/photos/1/2021/01/Korn.jpg';
-    imageBloc = BlocProvider.of<ImageBloc>(context);
-    imageBloc.add(LoadImageFromMemoryEvent());
-    textFieldBloc=BlocProvider.of<TextFieldBloc>(context);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            BlocConsumer<ImageBloc, ImageState>(
-              listener: (context, state) {
-                if (state is ImageUrlNotValidState) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('url неверный'),
-                    ),
-                  );
-                }
-                if (state is GetImageState) {
-                  listImage = state.imageByteList;
-                }
-              },
-              builder: (context, state) {
-                return FutureBuilder(
-                    future: listImage,
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return const Expanded(
-                              flex: 10,
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ));
-                        case ConnectionState.active:
-                          return Image.memory(snapshot.data![0]!);
-                        case ConnectionState.done:
-                          if (snapshot.hasData) {
-                            if (snapshot.data!.isNotEmpty) {
-                              var list = snapshot.data!;
-                              return Expanded(
-                                  flex: 10,
-                                  child: Align(
-                                    alignment: Alignment.topCenter,
-                                    child: ListView.builder(
-                                        itemCount: list.length,
-                                        itemBuilder: (context, i) {
-                                          return Image.memory(list[i]!);
-                                        }),
-                                  ));
-                            } else {
-                              return Container();
-                            }
-                          } else {
-                            return const Text('error');
-                          }
-                        default:
-                          return const Text('not working');
-                      }
-                    });
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            LoadImagePanel(/*urlTextController: urlTextController*/),
-          ],
-        ),
-      ),
-    );
-  }
-}*/
 
 class GalleryScreen extends StatelessWidget {
-   GalleryScreen({Key? key}) : super(key: key);
+  GalleryScreen({Key? key}) : super(key: key);
 
-  Future<List<Uint8List?>> listImage = Future.value([]);
+  //Future<List<Uint8List?>> listImage = Future.value([]);
+  List<Uint8List?> listImage = [];
+
 
   @override
   Widget build(BuildContext context) {
-    final imageBloc = BlocProvider.of<ImageBloc>(context)..add(LoadImageFromMemoryEvent());
+    var imageBloc = BlocProvider.of<ImageBloc>(context);
+     // ..add(LoadImageFromMemoryEvent());
     print('rebuild');
-    final textFieldBloc=BlocProvider.of<TextFieldBloc>(context);
+    final textFieldBloc = BlocProvider.of<TextFieldBloc>(context);
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -118,6 +27,7 @@ class GalleryScreen extends StatelessWidget {
         child: Column(
           children: [
             BlocConsumer<ImageBloc, ImageState>(
+              // buildWhen:(prev,next)=>(prev as GetImageState).imageByteList!=(next as GetImageState).imageByteList,
               listener: (context, state) {
                 if (state is ImageUrlNotValidState) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -131,18 +41,23 @@ class GalleryScreen extends StatelessWidget {
                 }
               },
               builder: (context, state) {
-                return FutureBuilder(
+                return Expanded(
+                    flex: 10,
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: ListView.builder(
+                          itemCount: listImage.length,
+                          itemBuilder: (context, i) {
+                            return Image.memory(listImage[i]!);
+                          }),
+                    ));
+
+                /*FutureBuilder(
                     future: listImage,
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          /*return const Expanded(
-                              flex: 10,
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ));*/
                         case ConnectionState.active:
-                          //return Container();
                         case ConnectionState.done:
                           if (snapshot.hasData) {
                             if (snapshot.data!.isNotEmpty) {
@@ -166,17 +81,17 @@ class GalleryScreen extends StatelessWidget {
                         default:
                           return const Text('not working');
                       }
-                    });
+                    });*/
               },
             ),
             const SizedBox(
               height: 10,
             ),
             LoadImagePanel(),
+
           ],
         ),
       ),
     );
   }
 }
-
