@@ -4,7 +4,7 @@ class TextFieldState extends Equatable{
   final String text;
 
 
-  TextFieldState({required this.text});
+  const TextFieldState({required this.text});
 
   @override
   List<Object> get props => [text];

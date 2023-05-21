@@ -10,15 +10,13 @@ import 'package:homework_2/text_field_bloc/text_field_bloc.dart';
 class GalleryScreen extends StatelessWidget {
   GalleryScreen({Key? key}) : super(key: key);
 
-  //Future<List<Uint8List?>> listImage = Future.value([]);
-  List<Uint8List?> listImage = [];
+    List<Uint8List?> listImage = [];
 
 
   @override
   Widget build(BuildContext context) {
-    var imageBloc = BlocProvider.of<ImageBloc>(context);
-     // ..add(LoadImageFromMemoryEvent());
-    print('rebuild');
+    var imageBloc = BlocProvider.of<ImageBloc>(context)
+      ..add(LoadImageFromMemoryEvent());
     final textFieldBloc = BlocProvider.of<TextFieldBloc>(context);
     return Scaffold(
       appBar: AppBar(),
@@ -87,7 +85,7 @@ class GalleryScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            LoadImagePanel(),
+            const LoadImagePanel(),
 
           ],
         ),
