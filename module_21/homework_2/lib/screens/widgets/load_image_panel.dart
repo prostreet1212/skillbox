@@ -3,49 +3,41 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homework_2/image_bloc/image_bloc.dart';
 import 'package:homework_2/text_field_bloc/text_field_bloc.dart';
 
-class LoadImagePanel extends StatefulWidget {
+class LoadImagePanel extends StatelessWidget {
   const LoadImagePanel({Key? key}) : super(key: key);
 
   @override
-  State<LoadImagePanel> createState() => _LoadImagePanelState();
-}
-
-class _LoadImagePanelState extends State<LoadImagePanel> {
- late TextEditingController controller;
-  @override
-  void initState() {
-    super.initState();
-   controller=TextEditingController(text: BlocProvider.of<TextFieldBloc>(context).state.text);
-  }
-  @override
   Widget build(BuildContext context) {
+    final textFieldBloc = BlocProvider.of<TextFieldBloc>(context);
+    final imageBloc = BlocProvider.of<ImageBloc>(context);
+    textFieldBloc.controller.text = textFieldBloc.state.text;
+
     return Align(
       alignment: Alignment.bottomCenter,
       child: Row(
         children: [
           Expanded(
-              flex: 3,
-              child: BlocBuilder<TextFieldBloc, TextFieldState>(
-                builder: (context, state) {
-                  return TextField(
-                    controller:controller,
-                    onChanged: (newValue) {
-                      BlocProvider.of<TextFieldBloc>(context)
-                          .add(TextFieldEvent(newValue));
-
-                    },
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Введите url картинки',
-                    ),
-                  );
-                },
-              )),
+            flex: 3,
+            child: BlocBuilder<TextFieldBloc, TextFieldState>(
+              builder: (context, state) {
+                return TextField(
+                  controller: textFieldBloc.controller,
+                  onChanged: (newValue) {
+                    BlocProvider.of<TextFieldBloc>(context)
+                        .add(TextFieldEvent(newValue));
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Введите url картинки',
+                  ),
+                );
+              },
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: () {
-              BlocProvider.of<ImageBloc>(context).add(LoadImageFromUrlEvent(
-                  BlocProvider.of<TextFieldBloc>(context).state.text));
+              imageBloc.add(LoadImageFromUrlEvent(textFieldBloc.state.text));
             },
           )
         ],

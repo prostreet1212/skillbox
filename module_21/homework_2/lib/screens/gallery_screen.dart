@@ -1,22 +1,15 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homework_2/image_bloc/image_bloc.dart';
 import 'package:homework_2/screens/widgets/load_image_panel.dart';
 import 'package:homework_2/text_field_bloc/text_field_bloc.dart';
 
-
 class GalleryScreen extends StatelessWidget {
-  GalleryScreen({Key? key}) : super(key: key);
-
-    List<Uint8List?> listImage = [];
-
+  const GalleryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var imageBloc = BlocProvider.of<ImageBloc>(context)
-      ..add(LoadImageFromMemoryEvent());
+    var imageBloc = BlocProvider.of<ImageBloc>(context);
     final textFieldBloc = BlocProvider.of<TextFieldBloc>(context);
     return Scaffold(
       appBar: AppBar(),
@@ -25,7 +18,8 @@ class GalleryScreen extends StatelessWidget {
         child: Column(
           children: [
             BlocConsumer<ImageBloc, ImageState>(
-              // buildWhen:(prev,next)=>(prev as GetImageState).imageByteList!=(next as GetImageState).imageByteList,
+              buildWhen: (prev, next) => next is GetImageState,
+              listenWhen: (prev,next)=>next is ImageUrlNotValidState,
               listener: (context, state) {
                 if (state is ImageUrlNotValidState) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -34,59 +28,27 @@ class GalleryScreen extends StatelessWidget {
                     ),
                   );
                 }
-                if (state is GetImageState) {
-                  listImage = state.imageByteList;
-                }
               },
               builder: (context, state) {
                 return Expanded(
-                    flex: 10,
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: ListView.builder(
-                          itemCount: listImage.length,
-                          itemBuilder: (context, i) {
-                            return Image.memory(listImage[i]!);
-                          }),
-                    ));
-
-                /*FutureBuilder(
-                    future: listImage,
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                        case ConnectionState.active:
-                        case ConnectionState.done:
-                          if (snapshot.hasData) {
-                            if (snapshot.data!.isNotEmpty) {
-                              var list = snapshot.data!;
-                              return Expanded(
-                                  flex: 10,
-                                  child: Align(
-                                    alignment: Alignment.topCenter,
-                                    child: ListView.builder(
-                                        itemCount: list.length,
-                                        itemBuilder: (context, i) {
-                                          return Image.memory(list[i]!);
-                                        }),
-                                  ));
-                            } else {
-                              return Container();
-                            }
-                          } else {
-                            return const Text('error');
-                          }
-                        default:
-                          return const Text('not working');
-                      }
-                    });*/
+                  flex: 10,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: (state is GetImageState)
+                        ? ListView.builder(
+                            itemCount: (state).imageByteList.length,
+                            itemBuilder: (context, i) {
+                              return Image.memory((state).imageByteList[i]!);
+                            })
+                        : Container(),
+                  ),
+                );
               },
             ),
             const SizedBox(
               height: 10,
             ),
             const LoadImagePanel(),
-
           ],
         ),
       ),

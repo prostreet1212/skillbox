@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -10,8 +9,7 @@ part 'image_event.dart';
 part 'image_state.dart';
 
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
-
-  ImageBloc() : super(GetImageState(imageByteList:[] ) /*Future.value([])*/) {
+  ImageBloc() : super(GetImageState(imageByteList: [])) {
     on<LoadImageFromMemoryEvent>(_onLoadImageFromMemory);
     on<LoadImageFromUrlEvent>(_onLoadImageFromUrl);
   }
@@ -32,14 +30,12 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
       }
     }).toList();
 
-    emit(GetImageState(imageByteList:s/*Future.value(s)*/));
+    emit(GetImageState(imageByteList: s));
     return s;
   }
 
-
-
-
   _onLoadImageFromUrl(
+
       LoadImageFromUrlEvent event, Emitter<ImageState> emit) async {
     Uint8List? imageBytes;
     if (Uri.parse(event.url).isAbsolute) {
@@ -55,8 +51,8 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
         imageBytes = file.readAsBytesSync();
         s.add(imageBytes);
       }
-      //emit(GetImageState(imageByteList:s/*Future.value(s)*/));
-      emit((state as GetImageState).copyWith(imageByteList:s/*Future.value(s)*/));
+        emit(GetImageState().copyWith(imageByteList: s));
+      //emit((state as GetImageState).copyWith(imageByteList: s));
     } else {
       emit(ImageUrlNotValidState());
     }

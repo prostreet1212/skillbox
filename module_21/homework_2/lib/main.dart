@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => ImageBloc()),
+        BlocProvider(
+            create: (context) => ImageBloc()..add(LoadImageFromMemoryEvent())),
         BlocProvider(create: (context) => TextFieldBloc()),
       ],
       child: MaterialApp(
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home:  GalleryScreen(),
+        home: const GalleryScreen(),
       ),
     );
   }
