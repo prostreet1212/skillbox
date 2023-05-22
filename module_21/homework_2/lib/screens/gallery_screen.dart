@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homework_2/image_bloc/image_bloc.dart';
 import 'package:homework_2/screens/widgets/load_image_panel.dart';
-import 'package:homework_2/text_field_bloc/text_field_bloc.dart';
+//import 'package:homework_2/text_field_bloc/text_field_bloc.dart';
 
 class GalleryScreen extends StatelessWidget {
   const GalleryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var imageBloc = BlocProvider.of<ImageBloc>(context);
-    final textFieldBloc = BlocProvider.of<TextFieldBloc>(context);
+    /*var imageBloc = BlocProvider.of<ImageBloc>(context);
+    final textFieldBloc = BlocProvider.of<TextFieldBloc>(context);*/
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
