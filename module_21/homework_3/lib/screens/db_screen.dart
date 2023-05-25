@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:homework_3/db_bloc/db_bloc.dart';
+import 'package:uuid/uuid.dart';
 import '../repository/users_helper.dart';
 
 class DbScreen extends StatelessWidget {
@@ -8,12 +10,16 @@ class DbScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FlutterSecureStorage storage=const FlutterSecureStorage(
+      aOptions: AndroidOptions(encryptedSharedPreferences: true),
+      iOptions: IOSOptions(accessibility:KeychainAccessibility.first_unlock)
+    );
     return Scaffold(
       appBar: AppBar(),
       body: BlocBuilder<DbBloc, DbState>(
         builder: (context, state) {
           if (state is InitDb) {
-            return  const Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
@@ -22,14 +28,28 @@ class DbScreen extends StatelessWidget {
               return ListView.builder(
                   itemCount: users.length,
                   itemBuilder: (context, i) {
-                    return Card(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(users[i].id.toString()),
-                          Text(users[i].name),
-                          Text(users[i].surname),
-                        ],
+                    return GestureDetector(
+                      onLongPress: () {
+                        BlocProvider.of<DbBloc>(context).add(UpdateUserEvent(
+                            userHelper: UserHelper(name: '123', surname: '456'),
+                            id: users[i].id));
+                      },
+                      child: Dismissible(
+                        key: Key(const Uuid().v1()),
+                        onDismissed: (direction) {
+                          BlocProvider.of<DbBloc>(context)
+                              .add(DeleteUserEvent(index: users[i].id));
+                        },
+                        child: Card(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(users[i].id.toString()),
+                              Text(users[i].name),
+                              Text(users[i].surname),
+                            ],
+                          ),
+                        ),
                       ),
                     );
                   });
@@ -40,17 +60,14 @@ class DbScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        mini: true,
         child: const Icon(Icons.add),
-        onPressed: () {
-          //добавление юзера
-         /* BlocProvider.of<DbBloc>(context)
-              .add(InsertUserEvent(userHelper: UserHelper(name: 'test',surname: 'testov')));*/
-          //удаление юзера
-          /*BlocProvider.of<DbBloc>(context)
-              .add(DeleteUserEvent(index: 6));*/
-
-          //Изменение юзера
-          BlocProvider.of<DbBloc>(context).add(UpdateUserEvent(userHelper: UserHelper(name: '123',surname: '456'),id: 7));
+        onPressed: () async{
+          /*BlocProvider.of<DbBloc>(context).add(InsertUserEvent(
+              userHelper: UserHelper(name: 'test', surname: 'testov')));*/
+          storage.write(key: 'key', value: 'text');
+          String value=await storage.read(key: 'key')??'aaa';
+          print(value);
         },
       ),
     );
