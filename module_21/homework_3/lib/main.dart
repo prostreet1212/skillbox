@@ -13,15 +13,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context)=>DbBloc(/*UserDatabase()*/)..add(GetAllUsersEvent()),
+    return RepositoryProvider(
+      create: (context)=>UserDatabase(),
+      child: BlocProvider(
+      create: (context)=>DbBloc(RepositoryProvider.of<UserDatabase>(context)/*UserDatabase()*/)..add(GetAllUsersEvent()),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: DbScreen(),
-      ),);
+        home: const DbScreen(),
+      ),),);
   }
 }
 
