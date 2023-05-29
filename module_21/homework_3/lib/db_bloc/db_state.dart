@@ -5,11 +5,13 @@ abstract class DbState{}
 
 class AllUsersState extends DbState{
    List<User> users;
+   Map<String,String> cardNumbers;
 
-  AllUsersState({this.users = const []});
+  AllUsersState({this.users = const [],this.cardNumbers=const {}});
 
-  AllUsersState copyWith({required List<User>? users}){
-    return AllUsersState( users:users??this.users);
+  AllUsersState copyWith({ List<User>? users,  Map<String,String>? cardNumbers}){
+    return AllUsersState( users:users??this.users,
+        cardNumbers: cardNumbers??this.cardNumbers);
   }
 }
 

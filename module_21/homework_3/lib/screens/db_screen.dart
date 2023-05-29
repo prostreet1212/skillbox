@@ -10,10 +10,7 @@ class DbScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlutterSecureStorage storage=const FlutterSecureStorage(
-      aOptions: AndroidOptions(encryptedSharedPreferences: true),
-      iOptions: IOSOptions(accessibility:KeychainAccessibility.first_unlock)
-    );
+
     return Scaffold(
       appBar: AppBar(),
       body: BlocBuilder<DbBloc, DbState>(
@@ -30,9 +27,9 @@ class DbScreen extends StatelessWidget {
                   itemBuilder: (context, i) {
                     return GestureDetector(
                       onLongPress: () {
-                        BlocProvider.of<DbBloc>(context).add(UpdateUserEvent(
+                       /* BlocProvider.of<DbBloc>(context).add(UpdateUserEvent(
                             userHelper: UserHelper(name: '123', surname: '456'),
-                            id: users[i].id));
+                            id: users[i].id));*/
                       },
                       child: Dismissible(
                         key: Key(const Uuid().v1()),
@@ -47,6 +44,7 @@ class DbScreen extends StatelessWidget {
                               Text(users[i].id.toString()),
                               Text(users[i].name),
                               Text(users[i].surname),
+                              //Text(await storage.read(key: '${users[i].id}_${users[i].surname}')??'aaa'),
                             ],
                           ),
                         ),
@@ -63,11 +61,9 @@ class DbScreen extends StatelessWidget {
         mini: true,
         child: const Icon(Icons.add),
         onPressed: () async{
-          /*BlocProvider.of<DbBloc>(context).add(InsertUserEvent(
-              userHelper: UserHelper(name: 'test', surname: 'testov')));*/
-          storage.write(key: 'key', value: 'text');
-          String value=await storage.read(key: 'key')??'aaa';
-          print(value);
+          BlocProvider.of<DbBloc>(context).add(InsertUserEvent(
+              userHelper: UserHelper(name: 'test', surname: 'testov',cardNumber: 123)));
+
         },
       ),
     );

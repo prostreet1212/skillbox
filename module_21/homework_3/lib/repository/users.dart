@@ -34,6 +34,12 @@ class UserDatabase extends _$UserDatabase{
   Future<int> insertUser(UserHelper userHelper)=>into(users).insert(UsersCompanion.insert(name: userHelper.name,surname: userHelper.surname));
   void deleteUser(int i)=>(delete(users)..where((t) => t.id.equals(i))).go();
   Future<int> updateUser(UserHelper newUser,int id)=>(update(users)..where((t) => t.id.equals(id))).write(UsersCompanion(name: Value(newUser.name),surname: Value(newUser.surname)));
+  Future<User> getLastRow() {
+    return (select(users)
+      ..orderBy([(t) => OrderingTerm(expression: t.id, mode: OrderingMode.desc)])
+      ..limit(1)
+    ).getSingle();
+  }
 
 
   @override
