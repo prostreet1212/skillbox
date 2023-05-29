@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:homework_3/db_bloc/db_bloc.dart';
 import 'package:uuid/uuid.dart';
 import '../repository/users_helper.dart';
@@ -22,7 +21,8 @@ class DbScreen extends StatelessWidget {
           } else {
             if ((state as AllUsersState).users.isNotEmpty) {
               var users = state.users;
-              return ListView.builder(
+              Map<String,String> cards=state.cardNumbers;
+               return ListView.builder(
                   itemCount: users.length,
                   itemBuilder: (context, i) {
                     return GestureDetector(
@@ -44,7 +44,8 @@ class DbScreen extends StatelessWidget {
                               Text(users[i].id.toString()),
                               Text(users[i].name),
                               Text(users[i].surname),
-                              //Text(await storage.read(key: '${users[i].id}_${users[i].surname}')??'aaa'),
+                              Text(cards['${users[i].id.toString()}_${users[i].name}']??''),
+                              //Text(cards[key]!),
                             ],
                           ),
                         ),
