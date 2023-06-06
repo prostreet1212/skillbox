@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:homework_3/db_bloc/db_bloc.dart';
-import 'package:homework_3/repository/users.dart';
 import 'package:homework_3/screens/db_screen.dart';
 
 void main() {
@@ -13,17 +10,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context)=>UserDatabase(),
-      child: BlocProvider(
-      create: (context)=>DbBloc(RepositoryProvider.of<UserDatabase>(context)/*UserDatabase()*/)..add(GetAllUsersEvent()),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const DbScreen(),
-      ),),);
+    return  MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const DbScreen(),
+    );
+   /* BlocProvider(
+      create: (context)=>DbBloc(UserDatabase(),CardStorage()/*UserDatabase()*/)..add(GetAllUsersEvent()),
+      child:
+    );*/
   }
 }
 
