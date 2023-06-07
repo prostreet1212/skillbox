@@ -185,22 +185,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-  copy_with_extension:
-    dependency: transitive
-    description:
-      name: copy_with_extension
-      sha256: "9c17d2b9a041ad19c97aa544c46a60f192cd409529bb9cfb98f48f336bb84d31"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.4"
-  copy_with_extension_gen:
-    dependency: "direct main"
-    description:
-      name: copy_with_extension_gen
-      sha256: "19ab5e5095a9047315b42a6c2bb7ddf59a85cd23a75278500661ced4299165e9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.4"
   crypto:
     dependency: transitive
     description:
@@ -384,14 +368,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
-  hive:
-    dependency: transitive
-    description:
-      name: hive
-      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.3"
   http_multi_server:
     dependency: transitive
     description:
@@ -408,14 +384,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  hydrated_bloc:
-    dependency: "direct main"
-    description:
-      name: hydrated_bloc
-      sha256: "0ea117b32259d9a79c2a2d33eef92e9dd676b88ec4f1ef94102c5889ca1673b6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.1.1"
   io:
     dependency: transitive
     description:
@@ -717,14 +685,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  synchronized:
-    dependency: transitive
-    description:
-      name: synchronized
-      sha256: "5fcbd27688af6082f5abd611af56ee575342c30e87541d0245f7ff99faa02c60"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0"
   term_glyph:
     dependency: transitive
     description:
