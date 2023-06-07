@@ -17,7 +17,7 @@ class DbBloc extends Bloc<DbEvent,DbState>{
 
 
   DbBloc(UserDatabase userDatabase,CardStorage cardStorage):_userDatabase=userDatabase,_cardStorage=cardStorage,
-        super(InitDb()){
+        super(AllUsersState()){
     on<GetAllUsersEvent>(_getAllUsersEvent);
     on<InsertUserEvent>(_insertUserEvent);
     on<DeleteUserEvent>(_deleteUserEvent);
@@ -31,26 +31,34 @@ class DbBloc extends Bloc<DbEvent,DbState>{
        //emit(AllUsersState().copyWith(users: value.toList()));
     });*/
 
-      emit(AllUsersState().copyWith(cardNumbers: await _cardStorage.readAllSecureData()));
+      //emit(AllUsersState().copyWith(cardNumbers: await _cardStorage.readAllSecureData()));
+
+    await _cardStorage.readAllSecureData().then((value) => emit((state as AllUsersState).copyWith(cardNumbers: value)));
 
     await emit.forEach (
         _userDatabase.usersStream,
         onData: (List<User> users)  {
-          return AllUsersState().copyWith(users: users);
+          return (state as AllUsersState).copyWith(users: users);
         });
+
   }
+
+
 
 
    _insertUserEvent(InsertUserEvent event, Emitter<DbState>emit)async{
      _userDatabase.insertUser(event.userHelper);
 
      User u=await _userDatabase.getLastRow();
-     print(u.id);
+     //print(u.id);
      String key='${u.id}_${event.userHelper.name}';
-     await _cardStorage.addCard(key,event.userHelper.cardNumber.toString());
+
+//print('last id ${(state as AllUsersState).users[(state as AllUsersState).users.length-1].id}');
+
+     await _cardStorage.addCard(key,event.userHelper.cardNumber.toString())
+         .whenComplete(() =>  _cardStorage.readAllSecureData().then((value) => emit((state as AllUsersState).copyWith(cardNumbers: value))));
      //var a=await _cardStorage.readAllSecureData();
      //emit(AllUsersState().copyWith(users:(state as AllUsersState).users,cardNumbers:a));
-    print('write');
    }
 
 

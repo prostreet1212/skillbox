@@ -5,8 +5,8 @@ abstract class DbState{}
 
 
 class AllUsersState extends DbState{
-   List<User> users;
-   Map<String,String> cardNumbers;
+   final List<User> users;
+   final Map<String,String> cardNumbers;
 
   AllUsersState({this.users = const [],this.cardNumbers=const {}});
 

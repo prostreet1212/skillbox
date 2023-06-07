@@ -42,7 +42,7 @@ class DbScreen extends StatelessWidget {
                             BlocProvider.of<DbBloc>(context)
                                 .add(DeleteUserEvent(index: users[i].id));
                           },
-                          child: Card(
+                          child:cards['${users[i].id.toString()}_${users[i].name}']!=null?Card(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -50,10 +50,9 @@ class DbScreen extends StatelessWidget {
                                 Text(users[i].name),
                                 Text(users[i].surname),
                                 Text(cards['${users[i].id.toString()}_${users[i].name}']??'error'),
-
                               ],
                             ),
-                          ),
+                          ):Center(child: CircularProgressIndicator(),),
                         ),
                       );
                     });
