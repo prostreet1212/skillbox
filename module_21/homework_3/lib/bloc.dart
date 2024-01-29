@@ -1,28 +1,44 @@
-
-
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
-class MyBloc implements FlutterSecureStorage{
+class MyBloc implements FlutterSecureStorage {
   @override
   // TODO: implement aOptions
   AndroidOptions get aOptions => throw UnimplementedError();
 
   @override
-  Future<bool> containsKey({required String key, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? wOptions}) {
+  Future<bool> containsKey(
+      {required String key,
+      IOSOptions? iOptions,
+      AndroidOptions? aOptions,
+      LinuxOptions? lOptions,
+      WebOptions? webOptions,
+      MacOsOptions? mOptions,
+      WindowsOptions? wOptions}) {
     // TODO: implement containsKey
     throw UnimplementedError();
   }
 
   @override
-  Future<void> delete({required String key, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? wOptions}) {
+  Future<void> delete(
+      {required String key,
+      IOSOptions? iOptions,
+      AndroidOptions? aOptions,
+      LinuxOptions? lOptions,
+      WebOptions? webOptions,
+      MacOsOptions? mOptions,
+      WindowsOptions? wOptions}) {
     // TODO: implement delete
     throw UnimplementedError();
   }
 
   @override
-  Future<void> deleteAll({IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? wOptions}) {
+  Future<void> deleteAll(
+      {IOSOptions? iOptions,
+      AndroidOptions? aOptions,
+      LinuxOptions? lOptions,
+      WebOptions? webOptions,
+      MacOsOptions? mOptions,
+      WindowsOptions? wOptions}) {
     // TODO: implement deleteAll
     throw UnimplementedError();
   }
@@ -40,13 +56,26 @@ class MyBloc implements FlutterSecureStorage{
   MacOsOptions get mOptions => throw UnimplementedError();
 
   @override
-  Future<String?> read({required String key, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? wOptions}) {
+  Future<String?> read(
+      {required String key,
+      IOSOptions? iOptions,
+      AndroidOptions? aOptions,
+      LinuxOptions? lOptions,
+      WebOptions? webOptions,
+      MacOsOptions? mOptions,
+      WindowsOptions? wOptions}) {
     // TODO: implement read
     throw UnimplementedError();
   }
 
   @override
-  Future<Map<String, String>> readAll({IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? wOptions}) {
+  Future<Map<String, String>> readAll(
+      {IOSOptions? iOptions,
+      AndroidOptions? aOptions,
+      LinuxOptions? lOptions,
+      WebOptions? webOptions,
+      MacOsOptions? mOptions,
+      WindowsOptions? wOptions}) {
     // TODO: implement readAll
     throw UnimplementedError();
   }
@@ -60,12 +89,16 @@ class MyBloc implements FlutterSecureStorage{
   WebOptions get webOptions => throw UnimplementedError();
 
   @override
-  Future<void> write({required String key, required String? value, IOSOptions? iOptions, AndroidOptions? aOptions, LinuxOptions? lOptions, WebOptions? webOptions, MacOsOptions? mOptions, WindowsOptions? wOptions}) {
+  Future<void> write(
+      {required String key,
+      required String? value,
+      IOSOptions? iOptions,
+      AndroidOptions? aOptions,
+      LinuxOptions? lOptions,
+      WebOptions? webOptions,
+      MacOsOptions? mOptions,
+      WindowsOptions? wOptions}) {
     // TODO: implement write
     throw UnimplementedError();
   }
-
-
-
-
 }
